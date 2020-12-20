@@ -36,8 +36,8 @@ public class AuthorizationServerConfig implements AuthorizationServerConfigurer 
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.checkTokenAccess("isAuthenticated()").tokenKeyAccess("permitAll()");
-
+        security.checkTokenAccess("isAuthenticated()")
+                .tokenKeyAccess("permitAll()");
     }
 
     @Override
@@ -45,6 +45,12 @@ public class AuthorizationServerConfig implements AuthorizationServerConfigurer 
         clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
 
     }
+
+//    @Override
+//    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+//        endpoints.authenticationManager(authenticationManager);
+//        endpoints.tokenStore(jdbcTokenStore());
+//    }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
@@ -58,6 +64,8 @@ public class AuthorizationServerConfig implements AuthorizationServerConfigurer 
     public JwtAccessTokenConverter tokenEnhancer() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         //For Secure RSA Verifier we can use OpenSSL Jwt
+//        converter.setVerifierKey(VERIFIER_KEY);
+//        converter.setSigningKey(SIGNING_KEY);
         return converter;
     }
 
